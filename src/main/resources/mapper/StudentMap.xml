@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Map 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbq.dao.mapper.StudentMapper">
+
+    <select id="getByName" resultType="com.bbq.beans.Student">
+      SELECT
+       id,
+       name,
+       QQ,
+       careerType,
+       entryDate,
+       school,
+       idOnSite,
+       dailyReportUrl,
+       brotherName,
+       createAt,
+       updateAt,
+       desire
+       FROM students WHERE name=#{name}
+    </select>
+    <!--插入 并返回主键id-->
+    <insert id="insertStudent" parameterType="com.bbq.beans.Student" useGeneratedKeys="true"
+    keyProperty="id">
+        INSERT into students
+        ( name, QQ, careerType, school, idOnSite, dailyReportUrl, brotherName,createAt, updateAt, desire)
+        VALUE
+        (#{name},#{QQ}, #{careerType}, #{school}, #{idOnSite}, #{dailyReportUrl},
+         #{brotherName}, #{createAt}, #{updateAt}, #{desire}
+         )
+    </insert>
+
+    <select id="getById" resultType="com.bbq.beans.Student">
+        SELECT
+               id,
+               name,
+               QQ,
+               careerType,
+               entryDate,
+               school,
+               idOnSite,
+               dailyReportUrl,
+               brotherName,
+               createAt,
+               updateAt,
+               desire
+        FROM students WHERE id=#{id}
+    </select>
+
+    <!--更新-->
+    <update id="updateStudent" parameterType="com.bbq.beans.Student" >
+        UPDATE students set
+        name = #{name},
+        QQ = #{QQ},
+        careerType = #{careerType},
+        school = #{school},
+        idOnSite = #{idOnSite},
+        dailyReportUrl = #{dailyReportUrl},
+        brotherName = #{brotherName},
+        createAt = #{createAt},
+        updateAt = #{updateAt},
+        desire = #{desire}
+        WHERE id = #{id}
+    </update>
+    <!--批量插入-->
+    <insert id="batchInsertStudent" parameterType="java.util.List">
+        INSERT into students
+        ( name, QQ, careerType, school, idOnSite, dailyReportUrl, brotherName,createAt, updateAt, desire)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+        (#{item.name},#{item.QQ}, #{item.careerType}, #{item.school}, #{item.idOnSite}, #{item.dailyReportUrl},
+        #{item.brotherName}, #{item.createAt}, #{item.updateAt}, #{item.desire}
+        )
+        </foreach>
+    </insert>
+
+    <delete id="deleteById" parameterType="int" >
+        DELETE FROM
+        students
+        WHERE id = #{id}
+    </delete>
+</mapper>

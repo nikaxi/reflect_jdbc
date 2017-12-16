@@ -1,0 +1,7 @@
+.idea
+*.propertites
+.*~
+target/*
+logs
+logs/*
+*.iml
